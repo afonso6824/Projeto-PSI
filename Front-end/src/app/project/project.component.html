@@ -1,0 +1,120 @@
+<div>
+  <button type="button" class="add-button" (click)="createProject()">
+    Create Project
+  </button>
+</div>
+
+
+<div class="container">
+  <h1>Novo Projeto</h1>
+  <form [formGroup]="projectForm" #formDir="ngForm" (ngSubmit)="addProject(name.value, acronym.value, beginDate.value, endDate.value )" >
+    <div [hidden]="formDir.submitted">
+
+
+      <div class="form-group">
+
+        <label for="name">Name</label>
+        <input type="text" id="name" class="form-control"
+               formControlName="name" required>
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="alert alert-danger">
+          <div *ngIf="name.errors?.['required']">
+            Name is required.
+          </div>
+          <div *ngIf="name.errors?.['minlength']">
+            Name must be at least 4 characters long.
+          </div>
+          <!--aqui vai ser carcteres-->
+          <div *ngIf="name.errors?.['pattern']">
+            MENSAGEM DE ERRO TODO.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="acronym">Acronym</label>
+        <input type="text" id="acronym" class="form-control"
+               formControlName="acronym">
+
+        <div *ngIf="acronym.invalid" class="alert alert-danger alter-ego-errors">
+          <div *ngIf="acronym.errors?.['uniqueAlterEgo']">
+            Acronym is already taken.
+          </div>
+          <div *ngIf="acronym.errors?.['required']">
+            Acronym is required
+          </div>
+        </div>
+      </div>
+
+      <div class="cross-validation" [class.cross-validation-error]="projectForm.errors?.['endDateValid'] &&
+      (projectForm.touched) || projectForm.dirty">
+
+        <div class="form-group">
+          <label for="beginDate">Begin Date:</label>
+          <input type="date" id="beginDate" class="form-control"
+                 formControlName="beginDate" required>
+          <div *ngIf="beginDate.invalid && beginDate.touched" class="alert alert-danger">
+            <div *ngIf="beginDate.errors?.['valid']">
+              begin Date is required.
+            </div>
+            <div *ngIf="beginDate.errors?.['todayValid']">
+              Begin Date tem de ser blablabla
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" class="form-control"
+                 formControlName="endDate">
+        </div>
+        <div *ngIf="projectForm.errors?.['endDateValid'] && (projectForm.touched ||
+        projectForm.dirty)" class="cross-validation-error-message alert alert-danger">
+          EndDate should be blablabla.
+        </div>
+      </div>
+
+
+      <p>Complete the form to enable the Submit button.</p>
+      <button type="submit"
+              class="btn btn-default"
+              [disabled]="projectForm.invalid">Submit
+      </button>
+      <button type="button" class="btn btn-default"
+              (click)="formDir.resetForm({})">Reset
+      </button>
+
+    </div>
+  </form>
+
+  <div class="submitted-message" *ngIf="formDir.submitted">
+    <p>You've submitted your hero, {{ projectForm.value.name }}!</p>
+    <button type="button" (click)="formDir.resetForm({})">Add new hero</button>
+  </div>
+
+
+</div>
+
+
+<!-- pagina pop out
+<div>
+  <h1>Novo Projeto</h1>
+  <form id="req_form" (submit)="addProject(projectName.value, projectAcr.value, projectBegin.value, projectEnd.value )" >
+    <label for="Project-name">Nome: </label>
+    <input type="text" pattern="[a-zA-Z0-9]+" id="Project-name" minlength="4" #projectName required/><br>
+    ver se acro é pedido ou gerado
+    <label for="Project-acr">Acrónimo: </label>
+    <input type="text" pattern="[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]" id="Project-acr" #projectAcr required/><br>
+    <label for="Project-begin">Data-de-inicio:</label>
+    <input type="date" (change)="checkBeginDate(projectBegin.value)" ) id="Project-begin" #projectBegin required><br>
+    <label for="Project-end">Data-final:</label>
+     Verificar value
+    <input type="date" id="Project-end" #projectEnd value="0000-00-00"><br>
+    <button class="add-button" >
+      criar
+    </button>
+  </form>
+</div>
+-->

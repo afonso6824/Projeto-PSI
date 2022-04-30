@@ -5,7 +5,9 @@ import { AbstractControl, FormGroup, NG_VALIDATORS, ValidationErrors, Validator,
 export const endDateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const beginDate = control.get('beginDate');
   const endDate = control.get('endDate');
-  return beginDate && endDate && new Date(beginDate.value) >= new Date(endDate.value) ? { endDateValid: true } : null;
+  if (beginDate?.value === null || endDate?.value === null)
+    return null;
+  return  beginDate && endDate && new Date(beginDate.value) >= new Date(endDate.value) ? { endDateValid: true } : null;
 };
 
 @Directive({

@@ -15,7 +15,7 @@ import {beginDateTodayValidator} from  "../Validators/begin-date-today.directive
 })
 export class ProjectComponent implements OnInit {
   projectForm!: FormGroup;
-  project = {name : "name", acronym: "acr", beginDate: "dd/mm/aaaa", endDate: "dd/mm/aaaa"};
+  project = {name : "", acronym: "", beginDate: "dd/mm/aaaa", endDate: "dd/mm/aaaa"};
   constructor(private projectService: ProjectService, private uniqueAcronymValidator: UniqueAcronymValidator) { }
 
   ngOnInit(): void {
@@ -52,27 +52,12 @@ export class ProjectComponent implements OnInit {
   }
 
   addProject(name: string, acronym: string, beginDate: string, endDate: string) {
-    let date = new Date(beginDate)
-    console.log();
-
-    if ( endDate !== "0000-00-00") {
+    if ( endDate !== this.project.endDate) {
       this.projectService.addNewProject({name,acronym,beginDate,endDate} as Project);
       return false;
     }
     this.projectService.addNewProject({name,acronym,beginDate} as Project);
     return false;
   }
-
-  /*
-  checkBeginDate(begin: string) {
-   let beginDate = new Date(begin);
-   let now = new Date();
-    if (beginDate < now){
-
-      return false;
-    }
-    return true;
-  }
-  */
 
 }

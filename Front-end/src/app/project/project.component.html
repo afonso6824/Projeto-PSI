@@ -15,7 +15,7 @@
 
         <label for="name">Name</label>
         <input type="text" id="name" class="form-control"
-               formControlName="name" required>
+               formControlName="name" placeholder="name" required>
 
         <div *ngIf="name.invalid && (name.dirty || name.touched)"
              class="alert alert-danger">
@@ -35,7 +35,7 @@
 
       <div class="form-group">
         <label for="acronym">Acronym</label>
-        <input type="text" id="acronym" class="form-control"
+        <input type="text" id="acronym" class="form-control" placeholder="acr"
                formControlName="acronym">
 
         <div *ngIf="acronym.invalid" class="alert alert-danger alter-ego-errors">

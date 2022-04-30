@@ -9,13 +9,13 @@ export class ProjectService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-
+  private projectsUrl = 'http://localhost:30013/';
   constructor(private http: HttpClient) { }
 
   /** POST: add a new project to the server */
   //TODO alterar parametros para um objeto project
   addNewProject( project: Project) {
-    console.log(project);
+    this.http.post(this.projectsUrl + 'project', project, this.httpOptions );
   }
 
   isAcronymTaken(value: any): Observable<boolean> {

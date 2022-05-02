@@ -1,6 +1,36 @@
+
+
 var Project = require('../models/project');
 
 const {body, validationResult} = require("express-validator");
+
+exports.update_project = [
+    (req,res,next) => {
+        var project = new Project({
+            name: req.body.name,
+            acronym: req.body.acronym,
+            beginDate: req.body.beginDate,
+            endDate: req.body.endDate,
+            tasks: req.body.tasks,
+            admin: req.body.admin,
+            _id: req.params.id,
+        });
+
+        Project.findByIdAndUpdate(req.params.id, project, {}, function (err){
+            if(err){return next(err)}
+            res.send(project);
+        })
+    }
+];
+
+exports.project_detail = function (req, res, next) {
+    Project.findById(req.params.id)
+        .exec(function (err, proj) {
+        if (err) { return next(err) }
+        res.send(proj);
+    })
+};
+
 
 exports.project_create_post = [
     (req, res, next) => {

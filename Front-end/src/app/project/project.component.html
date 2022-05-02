@@ -5,9 +5,10 @@
 </div>
 
 
-<div class="container">
+<div [hidden]="hiddenvar" class="container">
   <h1>Novo Projeto</h1>
-  <form [formGroup]="projectForm" #formDir="ngForm" (ngSubmit)="addProject(name.value, acronym.value, beginDate.value, endDate.value )" >
+  <form [formGroup]="projectForm" #formDir="ngForm"
+        (ngSubmit)="addProject(name.value, acronym.value, beginDate.value, endDate.value )">
     <div [hidden]="formDir.submitted">
 
 

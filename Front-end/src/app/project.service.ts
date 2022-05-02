@@ -23,4 +23,15 @@ export class ProjectService {
     const isTaken = false;
     return of(isTaken).pipe(delay(400));
   }
+
+  getProject(id: string): Observable<Project> {
+    const url = `${this.projectsUrl}project/${id}`;
+    return this.http.get<Project>(url);
+  }
+
+  /** PUT*/
+  updateProject(project: Project) {
+    const url = `${this.projectsUrl}project/${project._id}`;
+    return this.http.put(url,project,this.httpOptions);
+  }
 }

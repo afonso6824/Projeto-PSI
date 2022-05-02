@@ -1,0 +1,12 @@
+<div *ngIf="project">
+  <h2>{{project.name | uppercase}} ({{project.acronym | uppercase}}) Details</h2>
+  <div>begin Date {{project.beginDate}} - endDate {{project.endDate}}</div>
+  <!--confirmar router link depois
+  <div id="admin"><a routerLink="/user/detail/{{project.admin._id}}"> {{project.admin.name}} </a> </div>
+  <ul class="tasks">
+    <li *ngFor="let task of project.tasks">
+      <p> {{task.name}} - {{task.description}}</p>
+    </li>
+  </ul>
+</div>
+-->

@@ -1,0 +1,13 @@
+<p>autentication</p>
+<div class="autentication_form">
+
+  <div [hidden]="!invalid" class="autentication-error-message">
+    O username ou a password estao errados!
+  </div>
+  <label for="user">Username:</label>
+  <!--ngModel se houver class para conta-->
+  <input id="user" placeholder="username" #user>
+  <label for="password">Password:</label>
+  <input id="password" placeholder="password" #pwd>
+  <button type="button" (click)="submit(user.value,pwd.value)">Log in</button>
+</div>

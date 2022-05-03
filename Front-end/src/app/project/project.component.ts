@@ -2,7 +2,7 @@ import {Component, OnInit,} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProjectService} from '../project.service'
 import {Project} from '../project';
-import {UniqueAcronymValidator} from "../Validators/acronym.directive";
+import {uniqueAcronymValidator} from "../Validators/acronym.directive";
 import {endDateValidator} from "../Validators/end-date.directive";
 import {beginDateValidator} from "../Validators/begin-date.directive";
 import {beginDateTodayValidator} from "../Validators/begin-date-today.directive";
@@ -16,9 +16,12 @@ export class ProjectComponent implements OnInit {
   projectForm!: FormGroup;
   project = {name: "", acronym: "", beginDate: "dd/mm/aaaa", endDate: "dd/mm/aaaa"};
   currentUser = history.state;
-  hiddenvar = true;
+  //todo alterar true
+  hiddenvar = false;
 
-  constructor(private projectService: ProjectService, private uniqueAcronymValidator: UniqueAcronymValidator) {
+
+
+  constructor(private projectService: ProjectService) {
   }
 
   ngOnInit(): void {
@@ -31,10 +34,11 @@ export class ProjectComponent implements OnInit {
           Validators.pattern("[a-zA-Z0-9]+")
         ]),
         //TODO VER SE É PRECISO O UTILIZADOR POR acro, SE SIM FALTA VALIDAÇOES, MIN E MAX E REQUIRED
-        acronym: new FormControl(this.project.acronym, {
-          asyncValidators: [this.uniqueAcronymValidator.validate.bind(this.uniqueAcronymValidator)],
-          updateOn: "blur"
-        }),
+        acronym: new FormControl(this.project.acronym, [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(3)
+        ], uniqueAcronymValidator(this.projectService)),
         beginDate: new FormControl(new Date(this.project.beginDate), [
           beginDateValidator(),
           beginDateTodayValidator(),

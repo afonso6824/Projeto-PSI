@@ -1,5 +1,3 @@
-
-
 var Project = require('../models/project');
 
 const {body, validationResult} = require("express-validator");
@@ -23,6 +21,16 @@ exports.update_project = [
     }
 ];
 
+exports.get_project_by_acronym = function (req,res,next) {
+    let query = {acronym: req.params.acronym};
+    Project.findOne(query)
+        .exec(function (err, proj) {
+            if (err) { return next(err) }
+            res.send(proj);
+        })
+};
+
+
 exports.project_detail = function (req, res, next) {
     Project.findById(req.params.id)
         .exec(function (err, proj) {
@@ -40,7 +48,7 @@ exports.project_create_post = [
         var project = new Project({
             name: req.body.name,
             acronym: req.body.acronym,
-            beginDate: req.body.acronym,
+            beginDate: req.body.beginDate,
             endDate: req.body.endDate
         });
         if (!errors.isEmpty()) {

@@ -40,8 +40,14 @@
                formControlName="acronym">
 
         <div *ngIf="acronym.invalid" class="alert alert-danger alter-ego-errors">
-          <div *ngIf="acronym.errors?.['uniqueAlterEgo']">
+          <div *ngIf="acronym.errors?.['uniqueAcronym']">
             Acronym is already taken.
+          </div>
+          <div *ngIf="acronym.errors?.['minLength']">
+            Acronym is must have 3 blabla
+          </div>
+          <div *ngIf="acronym.errors?.['maxLength']">
+            Acronym is must have 3 blabla
           </div>
           <div *ngIf="acronym.errors?.['required']">
             Acronym is required

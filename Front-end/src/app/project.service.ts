@@ -18,11 +18,6 @@ export class ProjectService {
     this.http.post(this.projectsUrl + 'project', project, this.httpOptions );
   }
 
-  isAcronymTaken(value: any): Observable<boolean> {
-    //TODO is taken
-    const isTaken = false;
-    return of(isTaken).pipe(delay(400));
-  }
 
   getProject(id: string): Observable<Project> {
     const url = `${this.projectsUrl}project/${id}`;
@@ -33,5 +28,11 @@ export class ProjectService {
   updateProject(project: Project) {
     const url = `${this.projectsUrl}project/${project._id}`;
     return this.http.put(url,project,this.httpOptions);
+  }
+
+
+  getProjectByAcronym(acronym: string): Observable<Project>{
+    const url = `${this.projectsUrl}project/${acronym}`;
+    return this.http.get<Project>(url);
   }
 }

@@ -7,7 +7,9 @@ var cors = require('cors');
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://psi013:psi013@localhost:27017/psi013?retryWrites=true&authSource=psi013';
+//todo descomentar
+// var mongoDB = 'mongodb://psi013:psi013@localhost:27017/psi013?retryWrites=true&authSource=psi013';
+var mongoDB = 'mongodb://localhost:27017'
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));

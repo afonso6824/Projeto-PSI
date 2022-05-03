@@ -10,7 +10,7 @@ import { EndDateValidatorDirective } from './Validators/end-date.directive';
 import { BeginDateValidatorDirective } from './Validators/begin-date.directive';
 import { BeginDateTodayValidatorDirective } from './Validators/begin-date-today.directive';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { AutenticationComponent } from './autentication/autentication.component';
+//import { AutenticationComponent } from './autentication/autentication.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 
 @NgModule({
@@ -22,7 +22,6 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
     BeginDateValidatorDirective,
     BeginDateTodayValidatorDirective,
     ProjectDetailComponent,
-    AutenticationComponent,
     MainMenuComponent,
   ],
   imports: [

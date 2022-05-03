@@ -1,42 +1,36 @@
-import { Directive, forwardRef, Injectable } from '@angular/core';
+import { Directive } from '@angular/core';
 import {
   AsyncValidator,
   AbstractControl,
   NG_ASYNC_VALIDATORS,
-  ValidationErrors
+  ValidationErrors, AsyncValidatorFn
 } from '@angular/forms';
-import { catchError, map } from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { ProjectService } from '../project.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import {Project} from "../project";
 
-@Injectable({ providedIn: 'root' })
-export class UniqueAcronymValidator implements AsyncValidator {
-  constructor(private projectService: ProjectService) {}
-  validate(
-    control: AbstractControl
-  ): Observable<ValidationErrors | null> {
-    return this.projectService.isAcronymTaken(control.value).pipe(
-      map(isTaken => (isTaken ? { uniqueAcronym : true} : null)),catchError(() => of(null))
-    );
-  }
+
+
+export function uniqueAcronymValidator(projectService: ProjectService): AsyncValidatorFn {
+  return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+  return projectService.getProjectByAcronym(control.value).pipe(map(
+(project: Project) => {
+  return (project) ? {"acronymExists": true} : null;
+}
+));
+};
+
 }
 
 @Directive({
   selector: '[appUniqueAcronym]',
-  providers: [
-    {
-      provide: NG_ASYNC_VALIDATORS,
-      useExisting: forwardRef(() => UniqueAcronymValidatorDirective),
-      multi: true
-    }
-  ]
+  providers: [{provide: NG_ASYNC_VALIDATORS, useExisting:uniqueAcronymValidator, multi:true}]
 })
 export class UniqueAcronymValidatorDirective implements AsyncValidator {
-  constructor(private validator: UniqueAcronymValidator) {}
+  constructor(private projectService: ProjectService) { }
 
-  validate(
-    control: AbstractControl
-  ): Observable<ValidationErrors | null> {
-    return this.validator.validate(control);
+  validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+    return uniqueAcronymValidator(this.projectService)(control);
   }
 }
